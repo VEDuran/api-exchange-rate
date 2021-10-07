@@ -3,6 +3,7 @@ package com.exchangerate.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -18,4 +19,7 @@ public class CurrencyExchangeRate {
 
     @Column(name = "exchangeRate")
     private Double exchangeRate;
+
+    @Column(name = "creationDate")
+    private Date creationDate;
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Date;
 
 public class ExchangeRateProcessor {
 
@@ -15,7 +16,7 @@ public class ExchangeRateProcessor {
     }
 
     public static ExchangeRateResponse buildExchangeRateResponse(Double amount, String originCurrency, String destinationCurrency,
-                                                                 Double exchangeRate) {
+                                                                 CurrencyExchangeRate currencyExchangeRate) {
 
         DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
         simbolos.setDecimalSeparator('.');
@@ -25,11 +26,12 @@ public class ExchangeRateProcessor {
                 .amount(amount)
                 .amountWithExchangeRate(
                         Double.parseDouble(new DecimalFormat("#0.00", simbolos).format(destinationCurrency.equals("USD")
-                                ? amount * exchangeRate
-                                : amount / exchangeRate)))
+                                ? amount * currencyExchangeRate.getExchangeRate()
+                                : amount / currencyExchangeRate.getExchangeRate())))
                 .originCurrency(originCurrency)
                 .destinationCurrency(destinationCurrency)
-                .exchangeRate(exchangeRate)
+                .exchangeRate(currencyExchangeRate.getExchangeRate())
+                .creationDateOfExchangeRate(currencyExchangeRate.getCreationDate())
                 .build();
     }
 
@@ -37,6 +39,7 @@ public class ExchangeRateProcessor {
         CurrencyExchangeRate currencyExchangeRate = new CurrencyExchangeRate();
 
         BeanUtils.copyProperties(exchangeRateRequest, currencyExchangeRate);
+        currencyExchangeRate.setCreationDate(new Date());
 
         return currencyExchangeRate;
     }

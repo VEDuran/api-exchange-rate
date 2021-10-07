@@ -3,6 +3,8 @@ package com.exchangerate.model.api;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @Builder
 public class ExchangeRateResponse {
@@ -12,5 +14,6 @@ public class ExchangeRateResponse {
     private Double amountWithExchangeRate;
     private String originCurrency;
     private String destinationCurrency;
+    private Date creationDateOfExchangeRate;
 
 }

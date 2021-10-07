@@ -25,7 +25,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
                 .map(currencyExchangeRateOpt -> {
                     if (currencyExchangeRateOpt.isPresent()) {
                         return ExchangeRateProcessor.
-                                buildExchangeRateResponse(amount, originCurrency, destinationCurrency, currencyExchangeRateOpt.get().getExchangeRate());
+                                buildExchangeRateResponse(amount, originCurrency, destinationCurrency, currencyExchangeRateOpt.get());
                     }
                     throw new NotFoundException("El tipo de cambio solicitado no se encuentra registrado");
                 });
@@ -33,6 +33,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     @Override
     public Completable saveExchangeRate(ExchangeRateRequest exchangeRateRequest) {
+
         return findExchangeRateByCurrency(exchangeRateRequest.getCurrency())
                 .flatMapCompletable(currencyExchangeRateOpt -> {
 

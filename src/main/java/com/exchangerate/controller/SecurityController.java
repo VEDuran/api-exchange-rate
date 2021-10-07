@@ -4,12 +4,15 @@ import com.exchangerate.model.api.SecurityRequest;
 import com.exchangerate.model.api.SecurityResponse;
 import com.exchangerate.service.SecurityService;
 import io.swagger.annotations.ApiOperation;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashMap;
